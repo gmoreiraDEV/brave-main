@@ -1,10 +1,9 @@
+import axios from "axios";
+
 export async function sendContactForm(data) {
-    return fetch("/api/mail", {
-        method: "POST",
-        body: JSON.stringify(data),
-        headers: {
-            "Content-Type": "application/json",
-            Accept: "application/json",
-        },
+    const result = await axios.post("/api/mail", {
+        data: JSON.stringify(data),
     });
+
+    return result;
 }
