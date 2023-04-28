@@ -9,7 +9,10 @@ html,
     @apply box-border m-0 p-0;
 }
 
-html {
+html,
+#projetos,
+#contato,
+#inicio {
     @apply scroll-smooth;
 }
 

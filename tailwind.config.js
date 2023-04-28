@@ -21,7 +21,7 @@ module.exports = {
                 },
             },
             backgroundImage: {
-                "hero-pattern": "url('/img/vlnt-back.png')",
+                "hero-pattern": "url('/img/pattern.png')",
                 "bg-hero": "url('/img/bg-hero.png')",
             },
             keyframes: {
