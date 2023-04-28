@@ -1,14 +1,14 @@
 export default function Footer() {
     return (
-        <footer className="w-full flex justify-between items-center h-24 bg-brand-base">
-            <div className="w-2/3 m-auto flex justify-between items-center text-brand-white">
-                <div className="flex gap-4">
+        <footer className="w-full flex justify-between items-center min-h-24 py-4 bg-brand-base">
+            <div className="w-full lg:w-2/3 m-auto flex flex-col lg:flex-row justify-between items-center text-brand-white gap-4">
+                <div className="flex flex-col  items-center justify-center lg:flex-row gap-4">
                     <img
                         src="/img/vlnt-back.png"
                         alt="Logo Valente - Consultoria & Inovação"
                         className="max-w-[200px]"
                     />
-                    <div>
+                    <div className="text-center lg:text-left">
                         <strong>
                             Copyright © 2023 Valente Consultoria e Inovação LTDA
                             / CNPJ: 31.803.058/0001-05

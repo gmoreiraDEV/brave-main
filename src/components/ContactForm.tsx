@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import * as yup from "yup";
-import Success from "./ToastNotification/Success";
+import { Success, Danger } from "./ToastNotification";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import { sendContactForm } from "../services/api";
@@ -28,7 +28,8 @@ const schema = yup
 
 const WHATSAPP_LINK = process.env.NEXT_PUBLIC_WHATSAPP_LINK;
 export default function ContactForm() {
-    const [toastActive, setToastActive] = useState(false);
+    const [toastSucessActive, setToastSucessActive] = useState(false);
+    const [toastErrorActive, setToastErrorActive] = useState(false);
     const defaultValues: IContactFormData = useMemo(
         () => ({
             name: "",
@@ -44,7 +45,7 @@ export default function ContactForm() {
         handleSubmit,
         reset,
         formState,
-        formState: { errors, isSubmitSuccessful },
+        formState: { errors },
     } = useForm<IContactFormData>({
         resolver: yupResolver(schema),
         defaultValues,
@@ -56,16 +57,24 @@ export default function ContactForm() {
         const result = {
             name,
             email,
-            whatsapp: `${WHATSAPP_LINK}${whatsapp}`,
+            whatsapp: `https://api.whatsapp.com/send?phone=55${whatsapp}`,
             message,
             createdOn: createdOn,
         };
-        await sendContactForm(result);
-        setToastActive(true);
 
-        setTimeout(() => {
-            setToastActive(false);
-        }, 3100);
+        await sendContactForm(result)
+            .then(() => {
+                setToastSucessActive(true);
+                setTimeout(() => {
+                    setToastSucessActive(false);
+                }, 3100);
+            })
+            .catch((e) => {
+                setToastErrorActive(true);
+                setTimeout(() => {
+                    setToastErrorActive(false);
+                }, 3100);
+            });
     }
 
     useEffect(() => {
@@ -75,15 +84,18 @@ export default function ContactForm() {
     }, [formState, defaultValues, reset]);
 
     return (
-        <form className="flex flex-col gap-2" onSubmit={handleSubmit(onSubmit)}>
-            <div className="flex flex-col">
+        <form
+            className="flex flex-col gap-2 w-full lg:w-2/3"
+            onSubmit={handleSubmit(onSubmit)}
+        >
+            <div className="flex flex-col w-full">
                 <label className="text-brand-white text-base" htmlFor="name">
                     Nome
                 </label>
                 <input
                     type="text"
                     placeholder="Seu nome por favor?"
-                    className="w-96 h-12 rounded-lg p-2 bg-brand-white placeholder-brand-secondary"
+                    className="w-full h-12 rounded-lg p-2 bg-brand-white placeholder-brand-secondary"
                     id="name"
                     {...register("name", { required: true })}
                 />
@@ -93,14 +105,14 @@ export default function ContactForm() {
                     </span>
                 )}
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full">
                 <label className="text-brand-white text-base" htmlFor="email">
                     Email
                 </label>
                 <input
                     type="text"
                     placeholder="Coloque seu melhor email ein?!"
-                    className="w-96 h-12 rounded-lg p-2 bg-brand-white placeholder-brand-secondary"
+                    className="w-full h-12 rounded-lg p-2 bg-brand-white placeholder-brand-secondary"
                     id="email"
                     {...register("email", { required: true })}
                 />
@@ -110,7 +122,7 @@ export default function ContactForm() {
                     </span>
                 )}
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full">
                 <label
                     className="text-brand-white text-base"
                     htmlFor="whatsapp"
@@ -120,7 +132,7 @@ export default function ContactForm() {
                 <input
                     type="text"
                     placeholder="Posso pedir seu WhatsApp?"
-                    className="w-96 h-12 rounded-lg p-2 bg-brand-white placeholder-brand-secondary"
+                    className="w-full h-12 rounded-lg p-2 bg-brand-white placeholder-brand-secondary"
                     id="whatsapp"
                     {...register("whatsapp", { required: true })}
                 />
@@ -130,14 +142,14 @@ export default function ContactForm() {
                     </span>
                 )}
             </div>
-            <div className="flex flex-col">
+            <div className="flex flex-col w-full">
                 <label className="text-brand-white text-base" htmlFor="message">
                     Mensagem
                 </label>
                 <textarea
                     rows={10}
                     placeholder="Seja gentil com as palavras =D"
-                    className="w-96 rounded-lg p-2 bg-brand-white placeholder-brand-secondary"
+                    className="w-full rounded-lg p-2 bg-brand-white placeholder-brand-secondary"
                     id="message"
                     {...register("message", { required: true })}
                 />
@@ -154,12 +166,18 @@ export default function ContactForm() {
                 <span>Enviar mensagem</span>
                 <PaperPlaneTilt size={16} weight="fill" />
             </button>
-            <Success
-                message="Sua mensagem foi enviada com sucesso"
-                active={toastActive}
-            />
-            {/* {isSubmitSuccessful && (
-            )} */}
+            {toastSucessActive && (
+                <Success
+                    message="Sua mensagem foi enviada com sucesso"
+                    active={toastSucessActive}
+                />
+            )}
+            {toastErrorActive && (
+                <Danger
+                    message="Algo deu errado com sua solicitação, por favor tente novamente"
+                    active={toastSucessActive}
+                />
+            )}
         </form>
     );
 }

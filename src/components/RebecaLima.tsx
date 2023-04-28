@@ -5,25 +5,29 @@ export default function RebecaLima() {
     return (
         <section
             id="projetos"
-            className="bg-brand-off-white flex justify-between items-center w-full p-12"
+            className="bg-brand-off-white flex justify-between items-center w-screen p-12"
         >
             <div
-                className="w-2/3 m-auto flex justify-center items-center gap-16"
+                className="w-2/3 m-auto flex flex-col lg:flex-row justify-center items-center gap-16"
                 id="rebeca-lima"
             >
-                <img src="/img/rebeca-lima.png" alt="Foto Rebeca Lima" />
-                <div className="flex flex-col items-start justify-between gap-5">
+                <img
+                    src="/img/rebeca-lima.png"
+                    alt="Foto Rebeca Lima"
+                    className="max-w-xs"
+                />
+                <div className="flex flex-col items-center lg:items-start justify-between gap-5">
                     <RebecaLimaLogo
                         color="fill-brand-secondary"
-                        className="w-96"
+                        className="sm:w-96 w-72"
                     />
                     <div>
-                        <div className="flex gap-3 items-center justify-start">
-                            <h2 className="text-5xl text-brand-secondary font-extrabold">
+                        <div className="flex gap-3 items-center justify-center lg:justify-start">
+                            <h2 className="text-5xl text-center lg:text-left text-brand-secondary font-extrabold">
                                 Rebeca Lima
                             </h2>
                             <a
-                                href="http://instagram.com/rebecalimanutri"
+                                href="https://instagram.com/rebecalimanutri"
                                 target="_blank"
                                 rel="noopener noreferrer"
                             >
@@ -34,7 +38,7 @@ export default function RebecaLima() {
                                 />
                             </a>
                         </div>
-                        <p className="font-regular max-w-lg text-brand-secondary">
+                        <p className="font-regular max-w-lg text-center lg:text-left text-brand-secondary">
                             Nutricionista e Chef de Cozinha com ampla
                             experiência, fará com que seus objetivos
                             nutricionais sejam alcançados através de consultas e
@@ -48,10 +52,14 @@ export default function RebecaLima() {
                             alimentares.
                         </p>
                     </div>
-                    <button className="flex justify-center items-center uppercase gap-2 w-52 h-12 p-4 bg-gradient-to-l from-brand-accent to-brand-primary rounded-lg text-brand-white font-medium">
-                        <span>ver site</span>
+                    <a
+                        href="https://instagram.com/rebecalimanutri"
+                        target="_blank"
+                        className="flex justify-center items-center uppercase gap-2 w-full lg:w-52 h-12 p-4 bg-gradient-to-l from-brand-accent to-brand-primary rounded-lg text-brand-white font-medium"
+                    >
+                        <span>conhecer mais</span>
                         <CaretRight size={16} />
-                    </button>
+                    </a>
                 </div>
             </div>
         </section>

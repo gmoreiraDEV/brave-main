@@ -51,7 +51,7 @@ export default function Home() {
             </Head>
             <main
                 id="inicio"
-                className={`${inter.className} h-full w-full flex flex-col justify-between items-center scroll-smooth overflow-x-hidden`}
+                className={`${inter.className} h-full w-full grid auto-rows-max  overflow-x-hidden`}
             >
                 <Header />
                 <Hero />
