@@ -1,14 +1,17 @@
-import NextLink from "next/link";
+import NextLink, { LinkProps } from "next/link";
+import { PropsWithChildren } from "react";
 
-interface ILink {
-    href: string;
-    cssClasses: string;
-    label: string;
-}
-export default function Link({ href, cssClasses, label }: ILink) {
+type CustomLinkProps = LinkProps & {
+    className?: string;
+};
+export default function ActiveLink({
+    children,
+    className,
+    ...props
+}: PropsWithChildren<CustomLinkProps>) {
     return (
-        <NextLink href={href} className={cssClasses}>
-            {label}
+        <NextLink className={className} scroll={false} {...props}>
+            {children}
         </NextLink>
     );
 }
